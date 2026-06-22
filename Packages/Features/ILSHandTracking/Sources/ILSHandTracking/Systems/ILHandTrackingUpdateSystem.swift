@@ -41,6 +41,11 @@ public struct ILHandTrackingUpdateSystem: System {
             if var comp = entity.components[ILHandAnchorComponent.self] {
                 comp.rightHand = rightAnchor
                 comp.leftHand  = leftAnchor
+                
+                if Int.random(in: 1...60) == 1 {
+                    print("[ILHandTrackingUpdateSystem] Updating anchor comp. rightHand tracked: \(rightAnchor?.isTracked ?? false)")
+                }
+                
                 entity.components.set(comp)
             }
         }

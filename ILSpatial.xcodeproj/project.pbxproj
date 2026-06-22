@@ -14,6 +14,7 @@
 		8C20E4334787813B9C0D4268 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DF15AE517CF166B1C97EF /* App.swift */; };
 		9AB496A081AC71E5FF2786C9 /* ILSEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 01D47E6A412D0D88E6DBAEE2 /* ILSEngine */; };
 		AE5A552EB3B879DE8EF2023B /* ILSRealityAssets in Frameworks */ = {isa = PBXBuildFile; productRef = B7780901F7F3BF124F606AC9 /* ILSRealityAssets */; };
+		C6F8CA4CC05A0F05DD47861D /* SpatialDrawExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E452D97B7E53D21272E92 /* SpatialDrawExampleView.swift */; };
 		CC59576F75E83A4C2402B23D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860A1D64406168F261586055 /* MainView.swift */; };
 		CDAD13ED69239F043680FD92 /* ILSHandTracking in Frameworks */ = {isa = PBXBuildFile; productRef = F55E6F4EBEC9262DE290AF09 /* ILSHandTracking */; };
 		D84375E30AF3A409E1288AE9 /* ILSSpatialAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 834DAC9B11E9A08F452B124A /* ILSSpatialAudio */; };
@@ -23,15 +24,15 @@
 		245DF15AE517CF166B1C97EF /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		420270A316CC9DADE748685F /* ILSEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSEngine; path = Packages/Core/ILSEngine; sourceTree = SOURCE_ROOT; };
 		4B823C31D3E50BFF19912C07 /* ILSFoundation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSFoundation; path = Packages/Core/ILSFoundation; sourceTree = SOURCE_ROOT; };
+		507E452D97B7E53D21272E92 /* SpatialDrawExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpatialDrawExampleView.swift; sourceTree = "<group>"; };
 		55A36DA6F9B07F2BB07256AD /* ILSSpatialDraw */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSSpatialDraw; path = Packages/Features/ILSSpatialDraw; sourceTree = SOURCE_ROOT; };
 		6435127203FD812E2E30A5FF /* ILSRealityAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSRealityAssets; path = Packages/RealityKitContent/ILSRealityAssets; sourceTree = SOURCE_ROOT; };
 		67CC1E21E17FF40F4EBCF2B3 /* SystemRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRegistry.swift; sourceTree = "<group>"; };
 		860A1D64406168F261586055 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		90F3ABC667C960B5E9B908C8 /* ILSHandTracking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSHandTracking; path = Packages/Features/ILSHandTracking; sourceTree = SOURCE_ROOT; };
-		C551C6D3268D7044160F3CE0 /* ILSpatialApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ILSpatialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C551C6D3268D7044160F3CE0 /* ILSpatialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILSpatialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB331C94BBC0FCE19EFA1144 /* ILSDesignSystem */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSDesignSystem; path = Packages/Components/ILSDesignSystem; sourceTree = SOURCE_ROOT; };
 		ED2837FD81F1B76936B8C408 /* ILSSpatialAudio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSSpatialAudio; path = Packages/Features/ILSSpatialAudio; sourceTree = SOURCE_ROOT; };
-		F602D4832FE8E4F200CA963F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 			children = (
 				245DF15AE517CF166B1C97EF /* App.swift */,
 				860A1D64406168F261586055 /* MainView.swift */,
+				507E452D97B7E53D21272E92 /* SpatialDrawExampleView.swift */,
 				67CC1E21E17FF40F4EBCF2B3 /* SystemRegistry.swift */,
 			);
 			name = Sources;
@@ -86,7 +88,6 @@
 				DB331C94BBC0FCE19EFA1144 /* ILSDesignSystem */,
 				420270A316CC9DADE748685F /* ILSEngine */,
 				4B823C31D3E50BFF19912C07 /* ILSFoundation */,
-				F602D4832FE8E4F200CA963F /* Package.swift */,
 				90F3ABC667C960B5E9B908C8 /* ILSHandTracking */,
 				6435127203FD812E2E30A5FF /* ILSRealityAssets */,
 				ED2837FD81F1B76936B8C408 /* ILSSpatialAudio */,
@@ -166,6 +167,7 @@
 			files = (
 				8C20E4334787813B9C0D4268 /* App.swift in Sources */,
 				CC59576F75E83A4C2402B23D /* MainView.swift in Sources */,
+				C6F8CA4CC05A0F05DD47861D /* SpatialDrawExampleView.swift in Sources */,
 				3D359C6ADE848ACCB797E8DC /* SystemRegistry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,10 +236,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8QWSSL8FP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHandsTrackingUsageDescription = "This app requires hand tracking for gesture controls.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -319,10 +323,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8QWSSL8FP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHandsTrackingUsageDescription = "This app requires hand tracking for gesture controls.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

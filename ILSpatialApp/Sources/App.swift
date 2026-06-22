@@ -51,14 +51,13 @@ struct ILSpatialApp: App {
         print("ILSpatial App Initialized & Systems Registered")
     }
     
-    var body: some Scene {
+    var body: some SwiftUI.Scene {
         // ── Main window (2D SwiftUI/Volumetric) ──
         WindowGroup {
             MainView()
                 .environmentObject(telemetryBridge)
         }
-        .windowStyle(.volumetric)
-        .defaultSize(width: 1.0, height: 1.0, depth: 1.0, in: .meters)
+        .defaultSize(width: 600, height: 400)
         
         // ── Immersive space (3D RealityKit) ──
         // Opened via openImmersiveSpace(id:)
@@ -108,6 +107,37 @@ struct SpatialWorkspaceView: View {
         RealityView { content in
             // Apply config logic...
             print("Loaded Workspace: \(config.id) with limit \(config.maxDrawingEntities)")
+            
+            // 1. Hand tracking entities (From ILSHandTracking)
+            let hands = HandEntitySpawner.spawnHands()
+            for hand in hands {
+                content.add(hand)
+            }
+            
+            // 2. Canvas entity (From ILSSpatialDraw)
+            let canvas = Entity()
+            canvas.name = "Canvas"
+            canvas.components.set(CanvasComponent())
+            content.add(canvas)
+            
+            // 3. Draw controller (From ILSSpatialDraw)
+            // It reads HandTracking via ECS without explicitly binding to it here!
+            var drawComp = DrawingComponent()
+            drawComp.currentColor = ILSColor.cyan.simd
+            drawComp.sphereRadius = 0.01
+            
+            let drawController = Entity()
+            drawController.name = "DrawController"
+            drawController.components.set(drawComp)
+            drawController.components.set(ILHandAnchorComponent())
+            drawController.components.set(IsDrawingComponent())
+            content.add(drawController)
+            
+        }
+        .task {
+            // Start the ARKit HandTracking Provider!
+            // Without this, the ECS never gets joint updates.
+            try? await handTracking.start()
         }
     }
 }

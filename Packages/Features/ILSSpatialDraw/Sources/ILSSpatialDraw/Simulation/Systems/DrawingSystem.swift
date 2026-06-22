@@ -109,9 +109,12 @@ public struct DrawingSystem: System {
                     dc.lastPlacedPosition = tipPos
                     dc.activeStrokePoints.append(tipPos)
                     
+                    print("[DrawingSystem] shouldSpawn = true, point count = \(dc.activeStrokePoints.count), tipPos: \(tipPos)")
+                    
                     if !dc.isGeneratingMesh {
                         dc.isGeneratingMesh = true
-                        updateMeshAsync(
+                        print("[DrawingSystem] updateMeshAsync called")
+                        let startedAsync = updateMeshAsync(
                             points: dc.activeStrokePoints,
                             color: dc.currentColor,
                             radius: dc.sphereRadius,
@@ -119,6 +122,9 @@ public struct DrawingSystem: System {
                             on: canvas,
                             owner: entity
                         )
+                        if !startedAsync {
+                            dc.isGeneratingMesh = false
+                        }
                     }
 
                     // Broadcast via SharePlay if active (throttle to ~10Hz)
@@ -168,7 +174,7 @@ public struct DrawingSystem: System {
 
     // MARK: - Helpers
 
-    private func updateMeshAsync(points: [SIMD3<Float>], color: SIMD4<Float>, radius: Float, entityRef: inout Entity?, on canvas: Entity, owner: Entity?) {
+    private func updateMeshAsync(points: [SIMD3<Float>], color: SIMD4<Float>, radius: Float, entityRef: inout Entity?, on canvas: Entity, owner: Entity?) -> Bool {
         if points.count < 2 {
             if entityRef == nil {
                 let material = resourceCache.material(for: color)
@@ -178,19 +184,11 @@ public struct DrawingSystem: System {
                 canvas.addChild(strokeEntity)
                 entityRef = strokeEntity
             }
-            if let owner = owner, var dc = owner.components[DrawingComponent.self] {
-                dc.isGeneratingMesh = false
-                owner.components.set(dc)
-            }
-            return
+            return false
         }
 
         guard let strokeEntity = entityRef as? ModelEntity else { 
-            if let owner = owner, var dc = owner.components[DrawingComponent.self] {
-                dc.isGeneratingMesh = false
-                owner.components.set(dc)
-            }
-            return 
+            return false 
         }
 
         Task { @MainActor in
@@ -209,6 +207,8 @@ public struct DrawingSystem: System {
                 owner.components.set(dc)
             }
         }
+        
+        return true
     }
 
     private mutating func clearCanvas(_ canvas: Entity) {

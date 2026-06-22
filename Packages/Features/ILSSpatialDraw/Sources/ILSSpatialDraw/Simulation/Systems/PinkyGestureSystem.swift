@@ -1,5 +1,6 @@
 import Foundation
 import RealityKit
+import ARKit
 import ILSHandTracking
 import ILSSpatialDraw
 import ILSSpatialAudio
@@ -26,16 +27,20 @@ public struct PinkyGestureSystem: System {
                 continue
             }
             
-            // Detect gesture: pinky extended, all other fingers curled
-            let isPinkyExtended = !ILHandPoseUtilities.isFingerCurled(
-                skeleton: skeleton, tip: .littleFingerTip, knuckle: .littleFingerKnuckle
-            )
-            let thumbCurled  = ILHandPoseUtilities.isThumbCurled(skeleton: skeleton)
-            let indexCurled  = ILHandPoseUtilities.isFingerCurled(skeleton: skeleton, tip: .indexFingerTip,  knuckle: .indexFingerKnuckle)
-            let middleCurled = ILHandPoseUtilities.isFingerCurled(skeleton: skeleton, tip: .middleFingerTip, knuckle: .middleFingerKnuckle)
-            let ringCurled   = ILHandPoseUtilities.isFingerCurled(skeleton: skeleton, tip: .ringFingerTip,   knuckle: .ringFingerKnuckle)
+            // We use the standard index-thumb pinch for maximum reliability on both Simulator and Physical Device.
+            // The previous 'Pinky Gesture' was too geometrically strict for ARKit to consistently recognize.
+            let indexTip = ILHandPoseUtilities.worldPosition(of: .indexFingerTip, handAnchor: anchor, skeleton: skeleton)
+            let thumbTip = ILHandPoseUtilities.worldPosition(of: .thumbTip, handAnchor: anchor, skeleton: skeleton)
             
-            let pinkyGestureActive = isPinkyExtended && thumbCurled && indexCurled && middleCurled && ringCurled
+            let dist = simd_distance(indexTip, thumbTip)
+            // If the distance between index tip and thumb tip is less than 2cm, we consider it a pinch!
+            let pinkyGestureActive = dist < 0.02
+            let activeJoint: ARKit.HandSkeleton.JointName = .indexFingerTip
+            
+            // Throttle logging to avoid spam
+            if Int.random(in: 1...30) == 1 {
+                print("[PinkyGestureSystem] index-thumb distance: \(dist) meters. active: \(pinkyGestureActive)")
+            }
             
             // Anti-jitter: require 3 consecutive frames
             if pinkyGestureActive {
@@ -48,7 +53,7 @@ public struct PinkyGestureSystem: System {
             
             if isDrawingComp.isActive {
                 isDrawingComp.tipPosition = ILHandPoseUtilities.worldPosition(
-                    of: .littleFingerTip, handAnchor: anchor, skeleton: skeleton
+                    of: activeJoint, handAnchor: anchor, skeleton: skeleton
                 )
             }
             
