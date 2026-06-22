@@ -1,9 +1,9 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 import PackageDescription
 
 let package = Package(
     name: "ILSHandTracking",
-    platforms: [.visionOS(.v2)],
+    platforms: [.visionOS("2.0")],
     products: [
         .library(name: "ILSHandTracking", targets: ["ILSHandTracking"]),
     ],

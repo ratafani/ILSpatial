@@ -1,4 +1,5 @@
 import RealityKit
+import Foundation
 
 /// Stores the necessary state to perform a physical squash-and-glow animation.
 public struct ILSquashAnimationComponent: Component {

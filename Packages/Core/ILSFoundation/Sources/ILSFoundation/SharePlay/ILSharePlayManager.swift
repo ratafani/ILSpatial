@@ -31,7 +31,7 @@ open class ILSharePlayManager<Activity: GroupActivity> {
             _ = try await activity.activate()
             logger.info("Successfully activated SharePlay activity.")
         } catch {
-            logger.error("Failed to activate SharePlay: \\(error.localizedDescription)")
+            logger.error("Failed to activate SharePlay: \(error.localizedDescription)")
         }
     }
     
@@ -88,7 +88,7 @@ open class ILSharePlayManager<Activity: GroupActivity> {
         do {
             try await messenger.send(message)
         } catch {
-            logger.error("Failed to send message: \\(error.localizedDescription)")
+            logger.error("Failed to send message: \(error.localizedDescription)")
         }
     }
 }

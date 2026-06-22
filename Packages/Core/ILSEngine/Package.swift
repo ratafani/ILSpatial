@@ -1,9 +1,9 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 import PackageDescription
 
 let package = Package(
     name: "ILSEngine",
-    platforms: [.visionOS(.v2), .iOS(.v17)],
+    platforms: [.visionOS("2.0"), .iOS(.v17)],
     products: [
         .library(name: "ILSEngine", type: .static, targets: ["ILSEngine"]),
     ],

@@ -1,16 +1,17 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 import PackageDescription
 
 let package = Package(
     name: "ILSSpatialDraw",
-    platforms: [.visionOS(.v2)],
+    platforms: [.visionOS("2.0")],
     products: [
         .library(name: "ILSSpatialDraw", targets: ["ILSSpatialDraw"]),
     ],
     dependencies: [
         .package(path: "../../Core/ILSEngine"),
         .package(path: "../../Core/ILSFoundation"),
-        .package(path: "../ILSHandTracking")
+        .package(path: "../ILSHandTracking"),
+        .package(path: "../ILSSpatialAudio")
     ],
     targets: [
         .target(
@@ -18,7 +19,8 @@ let package = Package(
             dependencies: [
                 "ILSEngine",
                 "ILSFoundation",
-                "ILSHandTracking"
+                "ILSHandTracking",
+                "ILSSpatialAudio"
             ]
         )
     ]

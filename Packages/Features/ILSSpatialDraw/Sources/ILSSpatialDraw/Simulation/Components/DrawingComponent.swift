@@ -1,4 +1,5 @@
 import RealityKit
+import Foundation
 
 /// Stores appearance and continuous state for drawing
 public struct DrawingComponent: Component {

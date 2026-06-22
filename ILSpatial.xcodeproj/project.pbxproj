@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,6 +31,7 @@
 		C551C6D3268D7044160F3CE0 /* ILSpatialApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ILSpatialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB331C94BBC0FCE19EFA1144 /* ILSDesignSystem */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSDesignSystem; path = Packages/Components/ILSDesignSystem; sourceTree = SOURCE_ROOT; };
 		ED2837FD81F1B76936B8C408 /* ILSSpatialAudio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ILSSpatialAudio; path = Packages/Features/ILSSpatialAudio; sourceTree = SOURCE_ROOT; };
+		F602D4832FE8E4F200CA963F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +86,7 @@
 				DB331C94BBC0FCE19EFA1144 /* ILSDesignSystem */,
 				420270A316CC9DADE748685F /* ILSEngine */,
 				4B823C31D3E50BFF19912C07 /* ILSFoundation */,
+				F602D4832FE8E4F200CA963F /* Package.swift */,
 				90F3ABC667C960B5E9B908C8 /* ILSHandTracking */,
 				6435127203FD812E2E30A5FF /* ILSRealityAssets */,
 				ED2837FD81F1B76936B8C408 /* ILSSpatialAudio */,
@@ -149,7 +151,6 @@
 				75BFC1C317761E36AC8D7FA0 /* XCLocalSwiftPackageReference "Packages/Features/ILSSpatialAudio" */,
 				D3E811CDB2250463FD06BD92 /* XCLocalSwiftPackageReference "Packages/Features/ILSSpatialDraw" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

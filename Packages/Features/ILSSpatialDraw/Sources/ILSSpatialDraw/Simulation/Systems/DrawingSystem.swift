@@ -65,12 +65,13 @@ public struct DrawingSystem: System {
                     }
                     remoteStrokePoints[id]?.append(stroke.position)
                     
-                    updateMesh(
+                    updateMeshAsync(
                         points: remoteStrokePoints[id]!,
                         color: stroke.color,
                         radius: stroke.radius,
                         entityRef: &remoteStrokeEntities[id],
-                        on: canvas
+                        on: canvas,
+                        owner: nil
                     )
                 case .endStroke:
                     let id = stroke.strokeID
@@ -167,7 +168,7 @@ public struct DrawingSystem: System {
 
     // MARK: - Helpers
 
-    private func updateMeshAsync(points: [SIMD3<Float>], color: SIMD4<Float>, radius: Float, entityRef: inout Entity?, on canvas: Entity, owner: Entity) {
+    private func updateMeshAsync(points: [SIMD3<Float>], color: SIMD4<Float>, radius: Float, entityRef: inout Entity?, on canvas: Entity, owner: Entity?) {
         if points.count < 2 {
             if entityRef == nil {
                 let material = resourceCache.material(for: color)
@@ -177,7 +178,7 @@ public struct DrawingSystem: System {
                 canvas.addChild(strokeEntity)
                 entityRef = strokeEntity
             }
-            if var dc = owner.components[DrawingComponent.self] {
+            if let owner = owner, var dc = owner.components[DrawingComponent.self] {
                 dc.isGeneratingMesh = false
                 owner.components.set(dc)
             }
@@ -185,7 +186,7 @@ public struct DrawingSystem: System {
         }
 
         guard let strokeEntity = entityRef as? ModelEntity else { 
-            if var dc = owner.components[DrawingComponent.self] {
+            if let owner = owner, var dc = owner.components[DrawingComponent.self] {
                 dc.isGeneratingMesh = false
                 owner.components.set(dc)
             }
@@ -198,16 +199,12 @@ public struct DrawingSystem: System {
             }.value
             
             do {
-                if let existingMesh = strokeEntity.model?.mesh {
-                    try existingMesh.replace(with: [descriptor])
-                } else {
-                    strokeEntity.model?.mesh = try MeshResource.generate(from: [descriptor])
-                }
+                strokeEntity.model?.mesh = try MeshResource.generate(from: [descriptor])
             } catch {
                 print("Failed to replace mesh: \(error)")
             }
             
-            if var dc = owner.components[DrawingComponent.self] {
+            if let owner = owner, var dc = owner.components[DrawingComponent.self] {
                 dc.isGeneratingMesh = false
                 owner.components.set(dc)
             }
