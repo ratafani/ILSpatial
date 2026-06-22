@@ -8,17 +8,30 @@ public protocol HandTrackingServiceProtocol: SpatialServiceProtocol {
     var latestRightHand: HandAnchor? { get }
 }
 
-public final class HandTrackingService: HandTrackingServiceProtocol {
+public final class HandTrackingService: HandTrackingServiceProtocol, @unchecked Sendable {
     public static let shared = HandTrackingService()
     private let session = ARKitSession()
     private let handTracking = HandTrackingProvider()
     private let logger = ILLogger(subsystem: .handTracking, category: "HandTrackingService")
-    public private(set) var isTracking = false
+    
+    private let lock = NSLock()
+    
+    private var _isTracking = false
+    public var isTracking: Bool {
+        lock.withLock { _isTracking }
+    }
     
     private var updateTask: Task<Void, Never>?
     
-    public var latestLeftHand: HandAnchor?
-    public var latestRightHand: HandAnchor?
+    private var _latestLeftHand: HandAnchor?
+    public var latestLeftHand: HandAnchor? {
+        lock.withLock { _latestLeftHand }
+    }
+    
+    private var _latestRightHand: HandAnchor?
+    public var latestRightHand: HandAnchor? {
+        lock.withLock { _latestRightHand }
+    }
     
     public init() {}
     
@@ -28,8 +41,6 @@ public final class HandTrackingService: HandTrackingServiceProtocol {
             return
         }
         
-        // Request authorization from the user before running the session!
-        // Without this, ARKit will silently drop all hand anchor updates.
         let authorizationResult = await session.requestAuthorization(for: [.handTracking])
         for (providerType, status) in authorizationResult {
             if status != .allowed {
@@ -39,17 +50,16 @@ public final class HandTrackingService: HandTrackingServiceProtocol {
         }
         
         try await session.run([handTracking])
-        isTracking = true
+        lock.withLock { _isTracking = true }
         logger.info("Hand Tracking Started")
         
         updateTask = Task {
             for await update in handTracking.anchorUpdates {
                 let anchor = update.anchor
                 if anchor.chirality == .left {
-                    self.latestLeftHand = anchor
+                    self.lock.withLock { self._latestLeftHand = anchor }
                 } else if anchor.chirality == .right {
-                    self.latestRightHand = anchor
-                    // Log once every ~60 frames to avoid spamming, just to confirm stream
+                    self.lock.withLock { self._latestRightHand = anchor }
                     if Int.random(in: 1...60) == 1 {
                         self.logger.info("Streaming right hand anchor: tracked=\(anchor.isTracked)")
                     }
@@ -62,7 +72,7 @@ public final class HandTrackingService: HandTrackingServiceProtocol {
         updateTask?.cancel()
         updateTask = nil
         session.stop()
-        isTracking = false
+        lock.withLock { _isTracking = false }
         logger.info("Hand Tracking Stopped")
     }
 }
