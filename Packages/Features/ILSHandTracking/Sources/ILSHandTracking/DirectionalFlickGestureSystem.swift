@@ -7,7 +7,7 @@ import simd
 /// It looks for entities with `FlickGestureComponent` and updates them when a flick is detected.
 public struct DirectionalFlickGestureSystem: System {
     public static let query = EntityQuery(where: .has(FlickGestureComponent.self))
-    private let logger = ILLogger(subsystem: .framework, category: "FlickGesture")
+    private let logger = ILLogger(subsystem: .app, category: "FlickGesture")
     
     private var rightWasFacingDown: Bool = false
     private var rightWasFacingLeft: Bool = false

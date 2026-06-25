@@ -1,4 +1,5 @@
 import RealityKit
+import Foundation
 
 /// Represents the direction of a detected hand flick.
 public enum FlickDirection: String, Sendable {
